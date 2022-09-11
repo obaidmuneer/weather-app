@@ -1,10 +1,19 @@
+
 function getData() {
     let city = document.querySelector('#city').value
     let footer = document.querySelector('.footer')
     let apiKey = '55ff5b9f1aa556e25d9767c01329b185'
-    let forecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
-    let currTemp = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
-    axios.get(currTemp)
+    let backgroudImage = document.querySelector('.container')
+    footer.innerHTML = ''
+
+    currTemp(city, apiKey)
+    forecast(city, apiKey, footer)
+    handleBackground(backgroudImage)
+}
+
+function currTemp(city, apiKey) {
+    let currTempApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+    axios.get(currTempApi)
         .then(
             function (res) {
                 console.log(res.data);
@@ -15,18 +24,22 @@ function getData() {
         )
         .catch(
             function (err) {
-                console.log(err);
-                result.innerHTML = err.response.data.message
+                // console.log(err);
+                document.querySelector('.city').innerHTML = err.response.data.message
             }
         )
 
+}
 
+function forecast(city, apiKey, footer) {
     let weather = []
-    axios.get(forecast)
+    let forecastTemp = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
+    axios.get(forecastTemp)
         .then(
             function (res) {
                 // console.log(res.data);
                 let data = res.data.list
+                // console.log(res.data.list);
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
                     let d = new Date(element.dt_txt).getHours()
@@ -35,7 +48,7 @@ function getData() {
                         weather.push(element)
                     }
                 }
-                // console.log(weather);
+                console.log(weather);
                 let dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
                 for (let i = 0; i < weather.length; i++) {
                     const element = weather[i];
@@ -49,9 +62,23 @@ function getData() {
         )
         .catch(
             function (err) {
-                console.log(err);
-                result.innerHTML = err.response.data.message
+                // console.log(err);
+                document.querySelector('.city').innerHTML = err.response.data.message
             }
         )
 }
-    // getData()
+
+function handleBackground(backgroudImage) {
+    let d = new Date()
+    console.log(d.getHours());
+    if (d.getHours() < 12) {
+        backgroudImage.style.background = "url('../img/rising.jpg') no-repeat center"
+    } else if (d.getHours() < 15) {
+        backgroudImage.style.background = "url('../img/noon.jpg') no-repeat center"
+    } else if (d.getHours() < 20) {
+        backgroudImage.style.background = "url('../img/set.jpg') no-repeat center"
+    } else {
+        backgroudImage.style.background = "url('../img/night.jpg') no-repeat center"
+    }
+    backgroudImage.style.backgroundSize = 'cover'
+}
