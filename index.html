@@ -1,71 +1,33 @@
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Weather App</title>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
-            integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <style>
-            body{
-                /* min-height: 100vh; */
-                overflow: hidden;
-                display: flex;
-                /* align-items: center; */
-                justify-content: center;
-            }
-            .container{
-                border: 2px solid black;
-                padding: 2%;
-            }
-        </style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./style/style.css">
 
-    </head>
+</head>
 
-    <body>
-        <div class="container">
-            <h3 id="result"></h3>
-            <form onsubmit="getData(); return false">
-                <input type="text" id="city">
-                <button type="submit">Check</button>
-            </form>
+<body>
+    <div class="container">
+        <h3 class="city"></h3>
+        <div class="header">
+            <div class="col1">
+                <h2 class="temp" ></h2>
+            </div>
+
         </div>
+        <form onsubmit="getData(); return false">
+            <input type="text" id="city">
+            <button type="submit">Check</button>
+        </form>
+        <div class="footer"></div>
+    </div>
 
-        <script>
-            function getData() {
-                let city = document.querySelector('#city').value
-                // let city = 'karachi'
-                let result = document.querySelector('#result')
-                result.innerHTML = ''
-                let apiKey = '097edd5b0db3b7ba7d8453b22c8ced2d'
-                let call = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
-                axios.get(call)
-                    .then(
-                        function (res) {
-                            console.log(res.data);
-                            result.innerHTML += `City Name : ${res.data.name} <br/>`
-                            result.innerHTML += `<img src="http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png" alt="icon"> <br/>`
-                            result.innerHTML += `Current Tempreture : ${res.data.main.temp} ${res.data.weather[0].main}</br>`
-                            result.innerHTML += `Feels Tempreture : ${res.data.main.feels_like}`
-                        }
-                    )
-                    .catch(
-                        function (err) {
-                            console.log(err);
-                            result.innerHTML = err.response.data.message
-                        }
-                    )
+    <script src="./js/app.js"></script>
+</body>
 
-
-            }
-            // getData()
-
-        </script>
-        <!-- <script src="./js/app.js"></script> -->
-    </body>
-
-    </html>
+</html>
