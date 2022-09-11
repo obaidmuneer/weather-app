@@ -73,16 +73,16 @@ function handleBackground(bgImage) {
     // console.log(d.getHours());
     if (d.getHours() < 12) {
         console.log(d.getHours());
-        bgImage.style.background = "url('../img/rising.jpg') no-repeat center"
+        bgImage.style.background = "url('.././img/rising.jpg') no-repeat center"
     } else if (d.getHours() < 15) {
         console.log(d.getHours());
-        bgImage.style.background = "url('../img/noon.jpg') no-repeat center"
+        bgImage.style.background = "url('.././img/noon.jpg') no-repeat center"
     } else if (d.getHours() < 20) {
         console.log(d.getHours());
-        bgImage.style.background = "url('../img/set.jpg') no-repeat center"
+        bgImage.style.background = "url('.././img/set.jpg') no-repeat center"
     } else {
         console.log(d.getHours());
-        bgImage.style.background = "url('../img/night.jpg') no-repeat center"
+        bgImage.style.background = "url('.././img/night.jpg') no-repeat center"
     }
     bgImage.style.backgroundSize = 'cover'
 }
