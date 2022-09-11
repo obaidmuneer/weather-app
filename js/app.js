@@ -3,12 +3,12 @@ function getData() {
     let city = document.querySelector('#city').value
     let footer = document.querySelector('.footer')
     let apiKey = '55ff5b9f1aa556e25d9767c01329b185'
-    let backgroudImage = document.querySelector('.container')
+    let bgImage = document.querySelector('.container')
     footer.innerHTML = ''
 
     currTemp(city, apiKey)
     forecast(city, apiKey, footer)
-    handleBackground(backgroudImage)
+    handleBackground(bgImage)
 }
 
 function currTemp(city, apiKey) {
@@ -68,17 +68,21 @@ function forecast(city, apiKey, footer) {
         )
 }
 
-function handleBackground(backgroudImage) {
+function handleBackground(bgImage) {
     let d = new Date()
-    console.log(d.getHours());
+    // console.log(d.getHours());
     if (d.getHours() < 12) {
-        backgroudImage.style.background = "url('../img/rising.jpg') no-repeat center"
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/rising.jpg') no-repeat center"
     } else if (d.getHours() < 15) {
-        backgroudImage.style.background = "url('../img/noon.jpg') no-repeat center"
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/noon.jpg') no-repeat center"
     } else if (d.getHours() < 20) {
-        backgroudImage.style.background = "url('../img/set.jpg') no-repeat center"
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/set.jpg') no-repeat center"
     } else {
-        backgroudImage.style.background = "url('../img/night.jpg') no-repeat center"
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/night.jpg') no-repeat center"
     }
-    backgroudImage.style.backgroundSize = 'cover'
+    bgImage.style.backgroundSize = 'cover'
 }
