@@ -1,33 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="./style/style.css">
+function getData() {
+    let city = document.querySelector('#city').value
+    let footer = document.querySelector('.footer')
+    let apiKey = '55ff5b9f1aa556e25d9767c01329b185'
+    let bgImage = document.querySelector('.container')
+    footer.innerHTML = ''
 
-</head>
+    currTemp(city, apiKey)
+    forecast(city, apiKey, footer)
+    handleBackground(bgImage)
+}
 
-<body>
-    <div class="container">
-        <h3 class="city"></h3>
-        <div class="header">
-            <div class="col1">
-                <h2 class="temp msg" >Weather App</h2>
-            </div>
+function currTemp(city, apiKey) {
+    let currTempApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+    axios.get(currTempApi)
+        .then(
+            function (res) {
+                console.log(res.data);
+                let img = `<img src="http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png" alt="icon"></img>`
+                document.querySelector('.city').innerHTML = `${res.data.name}`
+                document.querySelector('.temp').innerHTML = `°${res.data.main.temp} <br> <span>${img} <br> ${res.data.weather[0].main}</span>`
+            }
+        )
+        .catch(
+            function (err) {
+                // console.log(err);
+                document.querySelector('.city').innerHTML = err.response.data.message
+            }
+        )
 
-        </div>
-        <form onsubmit="getData(); return false">
-            <input type="text" id="city">
-            <button type="submit">Check</button>
-        </form>
-        <div class="footer"></div>
-    </div>
+}
 
-    <script src="./js/app.js"></script>
-</body>
+function forecast(city, apiKey, footer) {
+    let weather = []
+    let forecastTemp = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
+    axios.get(forecastTemp)
+        .then(
+            function (res) {
+                // console.log(res.data);
+                let data = res.data.list
+                // console.log(res.data.list);
+                for (let i = 0; i < data.length; i++) {
+                    const element = data[i];
+                    let d = new Date(element.dt_txt).getHours()
+                    // console.log(d);
+                    if (d === 0) {
+                        weather.push(element)
+                    }
+                }
+                console.log(weather);
+                let dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                for (let i = 0; i < weather.length; i++) {
+                    const element = weather[i];
+                    let day = `<span>${dayNames[new Date(element.dt_txt).getDay()]}</span>`
+                    let img = `<img src="http://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png" alt="icon">`
+                    let temp = `<span>${element.main.temp}</span>`
+                    footer.innerHTML += `<div class="days"> ${day} ${img} ${temp}</div>`
 
-</html>
+                }
+            }
+        )
+        .catch(
+            function (err) {
+                // console.log(err);
+                document.querySelector('.city').innerHTML = err.response.data.message
+            }
+        )
+}
+
+function handleBackground(bgImage) {
+    let d = new Date()
+    // console.log(d.getHours());
+    if (d.getHours() < 12) {
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/rising.jpg') no-repeat center"
+    } else if (d.getHours() < 15) {
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/noon.jpg') no-repeat center"
+    } else if (d.getHours() < 20) {
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/set.jpg') no-repeat center"
+    } else {
+        console.log(d.getHours());
+        bgImage.style.background = "url('../img/night.jpg') no-repeat center"
+    }
+    bgImage.style.backgroundSize = 'cover'
+}
