@@ -1,14 +1,13 @@
 
+let bgImage = document.querySelector('.container')
 function getData() {
     let city = document.querySelector('#city').value
     let footer = document.querySelector('.footer')
     let apiKey = '55ff5b9f1aa556e25d9767c01329b185'
-    let bgImage = document.querySelector('.container')
     footer.innerHTML = ''
 
     currTemp(city, apiKey)
     forecast(city, apiKey, footer)
-    handleBackground(bgImage)
 }
 
 function currTemp(city, apiKey) {
@@ -16,10 +15,16 @@ function currTemp(city, apiKey) {
     axios.get(currTempApi)
         .then(
             function (res) {
+                handleBackground(bgImage)
                 console.log(res.data);
                 let img = `<img src="http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png" alt="icon"></img>`
                 document.querySelector('.city').innerHTML = `${res.data.name}`
                 document.querySelector('.temp').innerHTML = `°${res.data.main.temp} <br> <span>${img} <br> ${res.data.weather[0].main}</span>`
+                if (res.data.weather[0].main === 'Thunderstorm' || res.data.weather[0].main === 'Rain') {
+                    new RainyDay({
+                        image: document.querySelector('.container')
+                    })
+                }
             }
         )
         .catch(
@@ -39,11 +44,9 @@ function forecast(city, apiKey, footer) {
             function (res) {
                 // console.log(res.data);
                 let data = res.data.list
-                // console.log(res.data.list);
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
                     let d = new Date(element.dt_txt).getHours()
-                    // console.log(d);
                     if (d === 0) {
                         weather.push(element)
                     }
@@ -70,7 +73,6 @@ function forecast(city, apiKey, footer) {
 
 function handleBackground(bgImage) {
     let d = new Date()
-    // console.log(d.getHours());
     if (d.getHours() < 12) {
         console.log(d.getHours());
         bgImage.style.background = "url('./img/rising.jpg') no-repeat center"
@@ -85,4 +87,13 @@ function handleBackground(bgImage) {
         bgImage.style.background = "url('./img/night.jpg') no-repeat center"
     }
     bgImage.style.backgroundSize = 'cover'
+    document.querySelector('#city').style.opacity = 0.5
+    document.querySelector('button').style.opacity = 0.5
 }
+
+// inspired design
+// https://s3.amazonaws.com/blog.invisionapp.com/uploads/2018/05/weather-app-9.jpg
+
+// https://stackoverflow.com/questions/11371550/change-hover-css-properties-with-javascript
+// https://mubaidr.js.org/rainyday.js/#options
+// https://www.w3schools.com/js/js_date_methods.asp

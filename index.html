@@ -7,24 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./js/rainyday.js"></script>
     <link rel="stylesheet" href="./style/style.css">
 
 </head>
 
 <body>
+    <!-- <img src="./img/bg-transparent.gif" alt="icon" id="img"> -->
     <div class="container">
-        <h3 class="city"></h3>
-        <div class="header">
-            <div class="col1">
-                <h2 class="temp msg" >Weather App</h2>
-            </div>
+            <h3 class="city"></h3>
+            <div class="header">
+                <div class="col1">
+                    <h2 class="temp msg">Weather App</h2>
+                </div>
 
-        </div>
-        <form onsubmit="getData(); return false">
-            <input type="text" id="city">
-            <button type="submit">Check</button>
-        </form>
-        <div class="footer"></div>
+            </div>
+            <form onsubmit="getData(); return false">
+                <input type="text" id="city">
+                <button type="submit">Check</button>
+            </form>
+            <div class="footer"></div>
     </div>
 
     <script src="./js/app.js"></script>
