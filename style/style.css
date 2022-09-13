@@ -20,7 +20,7 @@ body {
     height: 95vh;
     border-radius: 1%;
     /* background-image: url; */
-    background: url('../img/night.jpg') no-repeat center;
+    background: url('../img/noon.jpg') no-repeat center;
     /* background-size: contain; */
     background-size: cover;
     display: flex;
