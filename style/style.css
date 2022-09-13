@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Passion+One');
 
+* { 
+    /* margin: 0; */
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100%;
+}
+
 body {
-    width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     font-family:Montserrat; 
@@ -16,7 +24,7 @@ body {
 .container {
     /* border: 2px solid black; */
     padding: 1%;
-    width: 30%;
+    width: 22rem;
     height: 85vh;
     border-radius: 1%;
     background: url('.././img/noon.jpg') no-repeat center;
@@ -30,6 +38,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 .temp>span{
     font-size: 14px;
