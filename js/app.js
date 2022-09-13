@@ -85,6 +85,7 @@ function handleBackground(bgImage) {
     } else {
         console.log(d.getHours());
         bgImage.style.background = "url('./img/night.jpg') no-repeat center"
+        document.querySelector('body').style.backgroundColor = '#000a12'
     }
     bgImage.style.backgroundSize = 'cover'
     document.querySelector('#city').style.opacity = 0.5
