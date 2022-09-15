@@ -1,7 +1,7 @@
 function snow() {
-    var canvas = document.getElementById("snow");
-    var ctx = canvas.getContext("2d");
-    var flakeArray = [];
+    let canvas = document.getElementById("snow");
+    let ctx = canvas.getContext("2d");
+    let flakeArray = [];
 
     canvas.style.pointerEvents = "none";
     canvas.style.position = "fixed";

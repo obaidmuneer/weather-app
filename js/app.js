@@ -1,15 +1,3 @@
-// function toggle_snow(msg) {
-//     let check_box = document.getElementById("toggle_snow");
-//     if (msg == 'Snow') {
-//         document.getElementById('snow').style.display = "block";
-//     }
-//     else {
-//         document.getElementById('snow').style.display = "none";
-//     }
-// }
-// toggle_snow('rain')
-// document.getElementById('snow').style.display = "none";
-
 let bgImage = document.querySelector('.container')
 function getData() {
     let city = document.querySelector('#city').value
@@ -29,6 +17,7 @@ function currTemp(city, apiKey) {
             function (res) {
                 handleBackground(bgImage)
                 console.log(res.data);
+                snowCheck(1)
                 let img = `<img src="http://openweathermap.org/img/wn/${res.data.weather[0].icon}@2x.png" alt="icon"></img>`
                 document.querySelector('.city').innerHTML = `${res.data.name}`
                 document.querySelector('.temp').innerHTML = `°${res.data.main.temp} <br> <span>${img} <br> ${res.data.weather[0].main}</span>`
@@ -36,11 +25,8 @@ function currTemp(city, apiKey) {
                     new RainyDay({
                         image: document.querySelector('.container')
                     })
-                } else if (res.data.weather[0].main === 'Snow') {
-                    snow()
-
                 }
-
+                snowCheck(res.data.weather[0].main)
             }
         )
         .catch(
@@ -105,6 +91,20 @@ function handleBackground(bgImage) {
     bgImage.style.backgroundSize = 'cover'
     document.querySelector('#city').style.opacity = 0.5
     document.querySelector('button').style.opacity = 0.5
+}
+
+function snowCheck(msg) {
+    let getCanvas = document.getElementById("snow");
+    if (getCanvas && msg != 'Snow') {
+        document.body.removeChild(getCanvas)
+        return
+    }
+    if (msg == 'Snow') {
+        let createCanvas = document.createElement('canvas')
+        createCanvas.setAttribute('id', 'snow')
+        document.body.appendChild(createCanvas)
+        snow()
+    }
 }
 
 // inspired design
