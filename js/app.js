@@ -1,3 +1,14 @@
+// function toggle_snow(msg) {
+//     let check_box = document.getElementById("toggle_snow");
+//     if (msg == 'Snow') {
+//         document.getElementById('snow').style.display = "block";
+//     }
+//     else {
+//         document.getElementById('snow').style.display = "none";
+//     }
+// }
+// toggle_snow('rain')
+// document.getElementById('snow').style.display = "none";
 
 let bgImage = document.querySelector('.container')
 function getData() {
@@ -8,6 +19,7 @@ function getData() {
 
     currTemp(city, apiKey)
     forecast(city, apiKey, footer)
+
 }
 
 function currTemp(city, apiKey) {
@@ -24,19 +36,17 @@ function currTemp(city, apiKey) {
                     new RainyDay({
                         image: document.querySelector('.container')
                     })
-                }
-                if (res.data.weather[0].main === 'Snow') {
-                    let canvas = document.createElement('canvas')
-                    canvas.setAttribute('id', 'snow')
-                    document.body.appendChild(canvas)
+                } else if (res.data.weather[0].main === 'Snow') {
+                    snow()
+
                 }
 
             }
         )
         .catch(
             function (err) {
-                // console.log(err);
-                document.querySelector('.city').innerHTML = err.response.data.message
+                console.log(err);
+                // document.querySelector('.city').innerHTML = err.response.data.message
             }
         )
 

@@ -1,4 +1,4 @@
-(function(){
+function snow() {
     var canvas = document.getElementById("snow");
     var ctx = canvas.getContext("2d");
     var flakeArray = [];
@@ -12,19 +12,19 @@
     canvas.style.zIndex = 1;
     canvas.style.userSelect = "none";
 
-    function canvasResize(){
+    function canvasResize() {
         canvas.height = canvas.offsetHeight;
         canvas.width = canvas.offsetWidth;
     }
     canvasResize();
 
-    window.onresize = function() {
+    window.onresize = function () {
         canvasResize();
     };
 
     var MyMath = Math;
 
-    setInterval(function() {
+    setInterval(function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
 
@@ -37,7 +37,7 @@
         flake.velX = 2 * distance * (MyMath.random() / 2 + .5);
         flake.velY = (4 + 2 * MyMath.random()) * distance;
         flake.radius = MyMath.pow(5 * random, 2) / 5;
-        flake.update = function() {
+        flake.update = function () {
             var t = this;
             t.x += t.velX;
             t.y += t.velY;
@@ -53,4 +53,4 @@
             flakeArray[b].y > canvas.height ? flakeArray.splice(b, 1) : flakeArray[b].update()
         }
     }, 16);
-})();
+}
