@@ -25,6 +25,12 @@ function currTemp(city, apiKey) {
                         image: document.querySelector('.container')
                     })
                 }
+                if (res.data.weather[0].main === 'Snow') {
+                    let canvas = document.createElement('canvas')
+                    canvas.setAttribute('id', 'snow')
+                    document.body.appendChild(canvas)
+                }
+
             }
         )
         .catch(
@@ -59,7 +65,6 @@ function forecast(city, apiKey, footer) {
                     let img = `<img src="http://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png" alt="icon">`
                     let temp = `<span>${element.main.temp}</span>`
                     footer.innerHTML += `<div class="days"> ${day} ${img} ${temp}</div>`
-
                 }
             }
         )
@@ -98,3 +103,4 @@ function handleBackground(bgImage) {
 // https://stackoverflow.com/questions/11371550/change-hover-css-properties-with-javascript
 // https://mubaidr.js.org/rainyday.js/#options
 // https://www.w3schools.com/js/js_date_methods.asp
+// https://github.com/HermannBjorgvin/SnowJs
