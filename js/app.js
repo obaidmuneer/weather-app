@@ -1,4 +1,6 @@
 let bgImage = document.querySelector('.container')
+let btn = document.querySelector('button')
+let footer = document.querySelector('.footer')
 
 if (window.navigator.geolocation) {
     const successfulLookup = position => {
@@ -12,7 +14,7 @@ if (window.navigator.geolocation) {
 
 function getData(lat, lon) {
     let apiKey = '55ff5b9f1aa556e25d9767c01329b185'
-    let footer = document.querySelector('.footer')
+    btn.disabled = true
     footer.innerHTML = ''
     let data;
     if (lat && lon) {
@@ -23,8 +25,6 @@ function getData(lat, lon) {
     }
     currTemp(data, apiKey)
     forecast(data, apiKey, footer)
-
-
 }
 function currTemp(data, apiKey) {
     let currTempApi = `https://api.openweathermap.org/data/2.5/weather?${data}&appid=${apiKey}&units=metric`
@@ -78,6 +78,8 @@ function forecast(data, apiKey, footer) {
                     let temp = `<span>${element.main.temp}</span>`
                     footer.innerHTML += `<div class="days"> ${day} ${img} ${temp}</div>`
                 }
+                btn.disabled = false
+
             }
         )
         .catch(
