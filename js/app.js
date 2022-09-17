@@ -1,17 +1,33 @@
 let bgImage = document.querySelector('.container')
-function getData() {
-    let city = document.querySelector('#city').value
-    let footer = document.querySelector('.footer')
-    let apiKey = '55ff5b9f1aa556e25d9767c01329b185'
-    footer.innerHTML = ''
 
-    currTemp(city, apiKey)
-    forecast(city, apiKey, footer)
+if (window.navigator.geolocation) {
+    const successfulLookup = position => {
+        let { latitude, longitude } = position.coords;
+        getData(latitude, longitude)
+    }
 
+    window.navigator.geolocation
+        .getCurrentPosition(successfulLookup, console.log);
 }
 
-function currTemp(city, apiKey) {
-    let currTempApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+function getData(lat, lon) {
+    let apiKey = '55ff5b9f1aa556e25d9767c01329b185'
+    let footer = document.querySelector('.footer')
+    footer.innerHTML = ''
+    let data;
+    if (lat && lon) {
+        data = `lat=${lat}&lon=${lon}`
+    } else {
+        let city = document.querySelector('#city').value
+        data = `q=${city}`
+    }
+    currTemp(data, apiKey)
+    forecast(data, apiKey, footer)
+
+
+}
+function currTemp(data, apiKey) {
+    let currTempApi = `https://api.openweathermap.org/data/2.5/weather?${data}&appid=${apiKey}&units=metric`
     axios.get(currTempApi)
         .then(
             function (res) {
@@ -32,15 +48,15 @@ function currTemp(city, apiKey) {
         .catch(
             function (err) {
                 console.log(err);
-                // document.querySelector('.city').innerHTML = err.response.data.message
+                document.querySelector('.city').innerHTML = err.response.data.message
             }
         )
 
 }
 
-function forecast(city, apiKey, footer) {
+function forecast(data, apiKey, footer) {
     let weather = []
-    let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
+    let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?${data}&appid=${apiKey}&units=metric`
     axios.get(forecastApi)
         .then(
             function (res) {
